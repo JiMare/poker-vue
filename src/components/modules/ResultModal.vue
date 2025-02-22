@@ -23,7 +23,6 @@ defineExpose({ openModal });
       :bordered="false"
       size="huge"
       role="dialog"
-      aria-modal="true"
     >
       {{ isCorrect ? "You gain 10s" : "You loose 10s" }}
     </n-card>

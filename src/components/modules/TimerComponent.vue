@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { startTime } from "../../constants";
 
 defineProps<{ timeLeft: number }>();
 const emit = defineEmits(["update:timeLeft"]);
 
-const time = ref(100);
+const time = ref(startTime);
 
 const startTimer = () => {
   const interval = setInterval(() => {

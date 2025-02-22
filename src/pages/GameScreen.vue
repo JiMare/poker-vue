@@ -1,18 +1,22 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import BaseCard from "../components/ui/BaseCard.vue";
-import { NButton, NText } from "naive-ui";
+import { NButton } from "naive-ui";
 import ResultModal from "../components/modules/ResultModal.vue";
 import TimerComponent from "../components/modules/TimerComponent.vue";
+import { startTime } from "../constants";
+import { generateAnswerOptions, generateRandomHand, getHandRanking } from "../utils/gameUtils";
 
 const isCorrect = ref(false);
 const resultModal = ref<InstanceType<typeof ResultModal> | null>(null);
-const timeLeft = ref(100);
+const timeLeft = ref(startTime);
+const hand = ref(generateRandomHand());
+const handRanking = ref(getHandRanking(hand.value));
 
-const options = ref(["Full House", "Two Pair", "Straight Flush"]);
+const options = ref(generateAnswerOptions(handRanking.value));
 
-const checkAnswer = (option: string) => {
-  isCorrect.value = option === "Full House";
+const checkAnswer = (option: boolean) => {
+  isCorrect.value = option;
   resultModal.value?.openModal();
 };
 </script>
@@ -21,18 +25,19 @@ const checkAnswer = (option: string) => {
   <div class="game-screen">
     <TimerComponent v-model:timeLeft="timeLeft" />
     <div class="hand">
-      <BaseCard rank="A" suit="♠" />
-      <BaseCard rank="K" suit="♥" />
-      <BaseCard rank="Q" suit="♦" />
-      <BaseCard rank="J" suit="♣" />
-      <BaseCard rank="10" suit="♠" />
+      <BaseCard
+        v-for="(card, index) in hand"
+        :key="index"
+        :rank="card.rank"
+        :suit="card.suit"
+      />
     </div>
     <div class="options">
       <n-button
         v-for="(option, index) in options"
         :key="index"
-        @click="checkAnswer(option)"
-        >{{ option }}</n-button
+        @click="checkAnswer(option.isCorrect)"
+        >{{ option.name }}</n-button
       >
     </div>
   </div>

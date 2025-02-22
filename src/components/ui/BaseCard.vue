@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { NText } from "naive-ui";
+import { type SuitType, type RankType } from "../../types/common";
 defineProps<{
-  rank: string;
-  suit: string;
+  rank: RankType;
+  suit: SuitType;
 }>();
 </script>
 
