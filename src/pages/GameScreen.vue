@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import BaseCard from "../components/ui/BaseCard.vue";
 import { NButton } from "naive-ui";
 import ResultModal from "../components/modules/ResultModal.vue";
@@ -11,8 +11,11 @@ import {
   getHandRanking,
 } from "../utils/gameUtils";
 
+const emit = defineEmits(["gameOver"]);
+
 const isCorrect = ref(false);
 const resultModal = ref<InstanceType<typeof ResultModal> | null>(null);
+const correctAnswers = ref(0);
 const timeLeft = ref(startTime);
 const isTimerRunning = ref(true);
 const hand = ref(generateRandomHand());
@@ -25,6 +28,7 @@ const checkAnswer = (option: boolean) => {
   resultModal.value?.openModal();
   if (option) {
     timeLeft.value += 10;
+    correctAnswers.value += 1;
   } else {
     timeLeft.value -= 10;
   }
@@ -36,6 +40,15 @@ const shuffleNewHand = () => {
   options.value = generateAnswerOptions(handRanking.value);
   isTimerRunning.value = true;
 };
+
+watch(timeLeft, (newTime) => {
+  if (newTime <= 0) {
+    const attempts = JSON.parse(localStorage.getItem("game_attempts") || "[]");
+    attempts.push(correctAnswers.value);
+    localStorage.setItem("game_attempts", JSON.stringify(attempts));
+    emit("gameOver");
+  }
+});
 </script>
 
 <template>
@@ -58,7 +71,11 @@ const shuffleNewHand = () => {
       >
     </div>
   </div>
-  <ResultModal ref="resultModal" :isCorrect="isCorrect" @close="shuffleNewHand" />
+  <ResultModal
+    ref="resultModal"
+    :isCorrect="isCorrect"
+    @close="shuffleNewHand"
+  />
 </template>
 
 <style scoped>

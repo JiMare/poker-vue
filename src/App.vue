@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import IntroScreen from "./pages/IntroScreen.vue";
 import GameScreen from "./pages/GameScreen.vue";
 import BaseLayout from "./components/layout/BaseLayout.vue";
+import LeaderbordScreen from "./pages/LeaderbordScreen.vue";
 
 const isPlaying = ref(false);
 const isFirstTime = ref(true);
@@ -17,7 +18,14 @@ onMounted(checkResults);
 
 <template>
   <BaseLayout>
-    <IntroScreen v-if="!isPlaying && isFirstTime" @start="isPlaying = true" />
-    <GameScreen v-if="isPlaying" />
+    <GameScreen v-if="isPlaying" @gameOver="isPlaying = false; checkResults()" />
+    <IntroScreen
+      v-else-if="!isPlaying && isFirstTime"
+      @start="isPlaying = true"
+    />
+    <LeaderbordScreen
+      v-else-if="!isPlaying && !isFirstTime"
+      @start="isPlaying = true"
+    />
   </BaseLayout>
 </template>
