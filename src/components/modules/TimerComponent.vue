@@ -1,28 +1,34 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { startTime } from "../../constants";
+import { ref, watchEffect } from "vue";
 
-defineProps<{ timeLeft: number }>();
+const props = defineProps<{ timeLeft: number; running: boolean }>();
 const emit = defineEmits(["update:timeLeft"]);
 
-const time = ref(startTime);
+const interval = ref<number | null>(null);
 
-const startTimer = () => {
-  const interval = setInterval(() => {
-    if (time.value > 0) {
-      time.value--;
-      emit("update:timeLeft", time.value);
-    } else {
-      clearInterval(interval);
+watchEffect(() => {
+  if (props.running) {
+    if (!interval.value) {
+      interval.value = setInterval(() => {
+        if (props.timeLeft > 0) {
+          emit("update:timeLeft", props.timeLeft - 1);
+        } else {
+          clearInterval(interval.value!);
+          interval.value = null;
+        }
+      }, 1000);
     }
-  }, 1000);
-};
-
-onMounted(startTimer);
+  } else {
+    if (interval.value) {
+      clearInterval(interval.value);
+      interval.value = null;
+    }
+  }
+});
 </script>
 
 <template>
-  <div class="timer">Time left: {{ time }}s</div>
+  <div class="timer">Time left: {{ timeLeft }}s</div>
 </template>
 
 <style scoped>
