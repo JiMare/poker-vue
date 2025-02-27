@@ -2,6 +2,13 @@ import { handRankings, ranks, suits } from "../constants";
 import type { SuitType, RankType, CardType } from "../types/common";
 import { Hand } from "pokersolver";
 
+const shuffleArray = <T>(array: T[]): T[] => {
+  return array
+    .map((value) => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value);
+};
+
 const getRandomCorrectAnswer = () => {
   const randomIndex = Math.floor(Math.random() * handRankings.length);
   return handRankings[randomIndex];
@@ -29,6 +36,8 @@ export const getHandRanking = (hand: { rank: RankType; suit: SuitType }[]) =>
 
 export const generateHand = () => {
   const ranking = getRandomCorrectAnswer();
+
+  console.log(ranking, "ranking");
 
   let hand: CardType[] = [];
 
@@ -139,7 +148,7 @@ export const generateHand = () => {
     }
   }
 
-  return hand;
+  return shuffleArray(hand);
 };
 
 export const generateAnswerOptions = (correctRanking: string) => {
