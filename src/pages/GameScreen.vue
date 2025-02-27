@@ -67,6 +67,7 @@ watch(timeLeft, (newTime) => {
         v-for="(option, index) in options"
         :key="index"
         @click="checkAnswer(option.isCorrect)"
+        :focusable="false"
         >{{ option.name }}</n-button
       >
     </div>

@@ -14,11 +14,6 @@ const openModal = () => {
   show.value = true;
 };
 
-const closeModal = () => {
-  show.value = false;
-  emit("close");
-};
-
 defineExpose({ openModal });
 </script>
 
