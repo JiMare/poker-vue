@@ -7,8 +7,8 @@ import TimerComponent from "../components/modules/TimerComponent.vue";
 import { startTime } from "../constants";
 import {
   generateAnswerOptions,
-  generateRandomHand,
   getHandRanking,
+  generateHand,
 } from "../utils/gameUtils";
 
 const emit = defineEmits(["gameOver"]);
@@ -18,7 +18,7 @@ const resultModal = ref<InstanceType<typeof ResultModal> | null>(null);
 const correctAnswers = ref(0);
 const timeLeft = ref(startTime);
 const isTimerRunning = ref(true);
-const hand = ref(generateRandomHand());
+const hand = ref(generateHand());
 const handRanking = ref(getHandRanking(hand.value));
 const options = ref(generateAnswerOptions(handRanking.value));
 
@@ -35,8 +35,9 @@ const checkAnswer = (option: boolean) => {
 };
 
 const shuffleNewHand = () => {
-  hand.value = [...generateRandomHand()];
+  hand.value = generateHand();
   handRanking.value = getHandRanking(hand.value);
+  console.log(handRanking.value, "handRanking");
   options.value = generateAnswerOptions(handRanking.value);
   isTimerRunning.value = true;
 };

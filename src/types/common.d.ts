@@ -1,4 +1,4 @@
-export type SuitType = "♠" | "♥" | "♦" | "♣";
+export type SuitType = "s" | "h" | "d" | "c";
 
 export type RankType =
   | "2"
@@ -16,7 +16,6 @@ export type RankType =
   | "A";
 
 export type Combinations =
-  | "Royal Flush"
   | "Straight Flush"
   | "Four of a Kind"
   | "Full House"
@@ -26,3 +25,8 @@ export type Combinations =
   | "Two Pair"
   | "Pair"
   | "High Card";
+
+export type CardType = {
+  rank: RankType;
+  suit: SuitType;
+};
