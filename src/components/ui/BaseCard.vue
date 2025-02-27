@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { NText } from "naive-ui";
-import { type SuitType, type RankType } from "../../types/common";
 import { getShape } from "../../utils/gameUtils";
 defineProps<{
   rank: RankType;

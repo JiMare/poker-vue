@@ -1,5 +1,3 @@
-import type { Combinations, RankType, SuitType } from "../types/common";
-
 export const startTime = 100;
 
 export const handRankings: Combinations[] = [

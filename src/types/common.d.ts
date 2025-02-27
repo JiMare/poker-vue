@@ -1,6 +1,6 @@
-export type SuitType = "s" | "h" | "d" | "c";
+declare type SuitType = "s" | "h" | "d" | "c";
 
-export type RankType =
+declare type RankType =
   | "2"
   | "3"
   | "4"
@@ -15,7 +15,7 @@ export type RankType =
   | "K"
   | "A";
 
-export type Combinations =
+declare type Combinations =
   | "Straight Flush"
   | "Four of a Kind"
   | "Full House"
@@ -26,7 +26,7 @@ export type Combinations =
   | "Pair"
   | "High Card";
 
-export type CardType = {
+declare type CardType = {
   rank: RankType;
   suit: SuitType;
 };
