@@ -30,8 +30,6 @@ export const getHandRanking = (hand: { rank: RankType; suit: SuitType }[]) =>
 export const generateHand = () => {
   const ranking = getRandomCorrectAnswer();
 
-  console.log(ranking, "ranking");
-
   let hand: CardType[] = [];
 
   switch (ranking) {

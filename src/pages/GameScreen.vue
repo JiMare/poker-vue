@@ -37,7 +37,6 @@ const checkAnswer = (option: boolean) => {
 const shuffleNewHand = () => {
   hand.value = generateHand();
   handRanking.value = getHandRanking(hand.value);
-  console.log(handRanking.value, "handRanking");
   options.value = generateAnswerOptions(handRanking.value);
   isTimerRunning.value = true;
 };

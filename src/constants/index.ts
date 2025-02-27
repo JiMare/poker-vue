@@ -25,7 +25,7 @@ export const ranks: RankType[] = [
   "7",
   "8",
   "9",
-  "10",
+  "T",
   "J",
   "Q",
   "K",

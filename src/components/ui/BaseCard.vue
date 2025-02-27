@@ -10,7 +10,7 @@ defineProps<{
 
 <template>
   <div class="card">
-    <n-text class="rank">{{ rank }}</n-text>
+    <n-text class="rank">{{ rank === "T" ? "10" : rank }}</n-text>
     <n-text class="rank">{{ getShape(suit) }}</n-text>
   </div>
 </template>
